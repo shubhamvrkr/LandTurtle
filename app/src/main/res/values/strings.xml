@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">LandTurtle</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="navDrawerItems">
+        <item>Home</item>
+        <item>Land Sale</item>
+        <item>Register/Transfer</item>
+        <item>Check Ownership</item>
+        <item>Contact Us</item>
+    </string-array>
+
+    <string-array name="navDrawerIcons">
+
+        <item>@drawable/home_start</item>
+        <item>@drawable/sale</item>
+        <item>@drawable/register</item>
+        <item>@drawable/ownership</item>
+        <item>@drawable/contactus</item>
+
+    </string-array>
+    <string name="mission">Mission</string>
+    <string name="whatwedo">We maintain the Land Register, where more than 24 million titles - the evidence of ownership - are documented.</string>
+    <string name="responsibilities">We Provide a reliable record of information about ownership of land.\nWe Provide owners with a land title that is underpinned by the state.\nWe simplify the transfer of interests in land.</string>
+</resources>
