@@ -70,7 +70,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                                 });
 
                         // Changing message text color
-                        snackbar.setActionTextColor(Color.BLUE);
+                        snackbar.setActionTextColor(Color.parseColor("#FF9800"));
 
                         // Changing action button text color
                         View sbView = snackbar.getView();
@@ -89,7 +89,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                                     snackbar.dismiss();
                                 }
                             });
-                    snackbar.setActionTextColor(Color.parseColor(""));
+                    snackbar.setActionTextColor(Color.parseColor("#FF9800"));
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.parseColor("#2196F3"));
