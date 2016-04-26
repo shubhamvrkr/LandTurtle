@@ -18,7 +18,7 @@ public class Register_Steps_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.register_steps_fragment, null);
+        return inflater.inflate(R.layout.register_steps_fragment, container,false);
     }
 
 

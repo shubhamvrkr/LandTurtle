@@ -1,14 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:id="@+id/cordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#E5E5E5">
+    android:background="#E5E5E5"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Checkownership" />
-</LinearLayout>
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_start" />
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="#FFFFFF"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true">
+
+
+                <com.leo.simplearcloader.SimpleArcLoader
+                    android:id="@+id/loader"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    custom:arc_margin="3dp"
+                    custom:arc_speed="medium"
+                    custom:arc_style="simple_arc" />
+
+                <LinearLayout
+                    android:id="@+id/form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:text="Enter Property Details"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#212121"
+                        android:textSize="25sp"
+                        android:typeface="serif" />
+
+                    <EditText
+                        android:id="@+id/landid"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/edittext_design"
+                        android:ellipsize="start"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Enter land id here"
+                        android:inputType="textPersonName"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/edittext_design"
+                        android:ellipsize="start"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Enter pincode here"
+                        android:inputType="number"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/checkbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="right"
+                        android:layout_margin="7dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/custom_button"
+                        android:elevation="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:text="Get Owner"
+                        android:textColor="#212121" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>

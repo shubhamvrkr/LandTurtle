@@ -24,4 +24,20 @@
     <string name="mission">Mission</string>
     <string name="whatwedo">We maintain the Land Register, where more than 24 million titles - the evidence of ownership - are documented.</string>
     <string name="responsibilities">We Provide a reliable record of information about ownership of land.\nWe Provide owners with a land title that is underpinned by the state.\nWe simplify the transfer of interests in land.</string>
+
+    <string name="step1"><a href="  ">Search the register</a> to make sure your property isn’t already registered. You must <a href="  ">transfer ownership</a> of registered property</string>
+    <string name="step2">Apply for a
+    <a href="  ">search from the Land Charges Department</a>
+    to search against all previous owners since 1925. They will send you the results.</string>
+    <string name="step3">Fill in an <a href="  ">application for first registration</a> .</string>
+    <string name="step4">Prepare a scale plan showing where the land is outlined, if it’s not shown in the <a href="  ">deeds. </a></string>
+    <string name="step5">Find the forms you need depending on your circumstances and fill out 2 copies of the <a href="  ">list of documents form</a> .</string>
+    <string name="step6">Find out the correct <a href="  ">registration fee </a> - this depends on the value of your property.</string>
+    <string name="step7">Send your documents, forms and fee to <a href="  ">Land Registry </a>.</string>
+
+    <string name="transfer_step1">Download and fill in an <a href="">application to change the register.</a></string>
+    <string name="transfer_step2">Fill in either a ‘<a href="">transfer of whole of registered title’ form</a>, if you’re transferring your whole property, or a <a href="">transfer of part of registered title </a> form if you’re only transferring part of your property.</string>
+    <string name="transfer_step3">Fill in a <a href="">certificate of identity for a private individual.</a></string>
+    <string name="transfer_step4">Find out the <a href="">correct fee.</a></string>
+    <string name="transfer_step5">Send your documents, forms and fee to <a href="">Land Registry.</a></string>
 </resources>
