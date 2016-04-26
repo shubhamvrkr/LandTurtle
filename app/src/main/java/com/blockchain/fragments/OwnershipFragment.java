@@ -15,10 +15,6 @@ import android.widget.TextView;
 
 import com.blockchain.landturtle.R;
 import com.blockchain.utils.NetworkManager;
-import com.leo.simplearcloader.ArcConfiguration;
-import com.leo.simplearcloader.SimpleArcDialog;
-import com.leo.simplearcloader.SimpleArcLoader;
-
 /**
  * Created by Shubham on 23-04-2016.
  */
@@ -44,7 +40,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
 
         form = (LinearLayout) v.findViewById(R.id.form);
         loader = (View) v.findViewById(R.id.loader);
-        layout = (CoordinatorLayout) v.findViewById(R.id.cocordinatorlayout)
+        layout = (CoordinatorLayout) v.findViewById(R.id.cordinatorlayout);
         checkwoner = (Button) v.findViewById(R.id.checkbutton);
         pro_et = (EditText) v.findViewById(R.id.landid);
         area_et = (EditText) v.findViewById(R.id.pincode);
@@ -93,7 +89,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                                     snackbar.dismiss();
                                 }
                             });
-                    snackbar.setActionTextColor(Color.BLUE);
+                    snackbar.setActionTextColor(Color.parseColor(""));
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.parseColor("#2196F3"));
