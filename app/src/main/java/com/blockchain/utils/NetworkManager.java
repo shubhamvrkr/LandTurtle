@@ -3,6 +3,7 @@ package com.blockchain.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -28,19 +29,18 @@ public class NetworkManager {
 
     public boolean isInternetPresent(Context context) {
         if (isConnectingToInternet(context)) {
+
+
             try {
-                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
-                urlc.setRequestProperty("User-Agent", "Test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(3000); //choose your own timeframe
-                urlc.setReadTimeout(4000); //choose your own timeframe
-                urlc.connect();
-                return (urlc.getResponseCode() == 200);
-            } catch (IOException e) {
-                return (false);  //connectivity exists, but no internet.
+                return new TryConnect().execute().get();
             }
+            catch(Exception e)
+            {
+                return false;
+            }
+
         } else {
-            return false;  //no connectivity
+            return false;
         }
     }
 
