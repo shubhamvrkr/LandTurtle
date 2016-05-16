@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp"
-                        android:text="Enter Property Details"
+                        android:text="Title Search"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#212121"
                         android:textSize="25sp"
@@ -76,9 +76,9 @@
                         android:ellipsize="start"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="Enter land id here"
+                        android:hint="Enter propertyid here"
                         android:inputType="textPersonName"
-                        android:textSize="20sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/pincode"
@@ -91,9 +91,9 @@
                         android:ellipsize="start"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="Enter pincode here"
+                        android:hint="Enter surveryid here"
                         android:inputType="number"
-                        android:textSize="20sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/checkbutton"

@@ -3,6 +3,6 @@
 
     <color name="statusBarColor">#1565C0</color>
     <color name="toolBarColor">#2196F3</color>
-
+    <drawable name="transperent_color">#00000000</drawable>
 
 </resources>

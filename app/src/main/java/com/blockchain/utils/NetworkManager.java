@@ -6,8 +6,15 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,74 +65,63 @@ public class NetworkManager {
         return false;
     }
 
-    public String getResponseFromServer(String URL, List<NameValuePair> params) {
-        String contentAsString = null;
+    public String getResponseFromServer(String URL, JSONObject obj) {
+        InputStream inputStream = null;
+        String result = "";
         try {
 
-            //creates a connection with the url
-            URL url1 = new URL(URL);
-            HttpURLConnection conn = (HttpURLConnection) url1.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-            conn.setUseCaches(false);
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
 
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getQuery(params));
-            writer.flush();
-            writer.close();
-            os.close();
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(URL);
 
-            conn.connect();
-            int response = conn.getResponseCode();
-            Log.d("sada", "The response is: " + response);
-            InputStream is = conn.getInputStream();
+            String json = obj.toString();
 
-            // Convert the InputStream into a string
-            contentAsString = readIt(is, 500);
-            Log.d("resposne", contentAsString);
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
 
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
 
-        return contentAsString;
-    }
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
 
-    //prepares data from the list to send it to url via Post method
-    private String getQuery(List<NameValuePair> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
 
-        for (NameValuePair pair : params) {
-            if (first)
-                first = false;
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
             else
-                result.append("&");
+                result = "Did not work!";
 
-            result.append(URLEncoder.encode(pair.getName(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(pair.getValue(), "UTF-8"));
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        return result.toString();
+        // 11. return result
+        return result;
     }
 
-    //reads the response from the server and converts it into a string
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
     }
 
 

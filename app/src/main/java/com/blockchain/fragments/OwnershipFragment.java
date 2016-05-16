@@ -1,5 +1,6 @@
 package com.blockchain.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +28,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
     EditText pro_et, area_et;
     Button checkwoner;
     NetworkManager nw = new NetworkManager();
-    String property_id, area_code;
+    String property_id, survey_code;
     LinearLayout form, land_owner_details;
 
     View loader;
@@ -50,13 +51,15 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 property_id = pro_et.getText().toString().trim();
-                area_code = area_et.getText().toString().trim();
+                survey_code = area_et.getText().toString().trim();
 
-                if (property_id.length() > 0 && area_code.length() > 0) {
+                if (property_id.length() > 0 && survey_code.length() > 0) {
                     if (nw.isInternetPresent(getActivity())) {
 
                         form.setVisibility(View.INVISIBLE);
                         loader.setVisibility(View.VISIBLE);
+
+
 
                     } else {
 
@@ -66,6 +69,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                                     @Override
                                     public void onClick(View view) {
 
+                                        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                                     }
                                 });
 
