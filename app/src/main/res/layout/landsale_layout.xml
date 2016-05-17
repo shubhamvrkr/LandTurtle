@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="5dp"
-        android:src="@drawable/ar132157071871551"
+        app:backgroundTint="#FF5252"
+        android:src="@drawable/sell"
         android:scaleType="fitXY"/>
 </FrameLayout>

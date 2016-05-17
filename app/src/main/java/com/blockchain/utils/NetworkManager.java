@@ -1,17 +1,26 @@
 package com.blockchain.utils;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,6 +36,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,9 +50,7 @@ public class NetworkManager {
 
             try {
                 return new TryConnect().execute().get();
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
 
@@ -66,63 +74,60 @@ public class NetworkManager {
     }
 
     public String getResponseFromServer(String URL, JSONObject obj) {
-        InputStream inputStream = null;
-        String result = "";
+
+        String responseServer="error";
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(URL);
+
         try {
 
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("req", obj.toString()));
 
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(URL);
+            Log.e("mainToPost", "mainToPost" + nameValuePairs.toString());
 
-            String json = obj.toString();
+            // Use UrlEncodedFormEntity to send in proper format which we need
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+            InputStream inputStream = response.getEntity().getContent();
+            responseServer = getStringFromInputStream(inputStream);
+            Log.e("response", "response -----" + responseServer);
 
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
 
         } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
+            e.printStackTrace();
         }
-
-        // 11. return result
-        return result;
+        return responseServer;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
+    // convert InputStream to String
+    private static String getStringFromInputStream(InputStream is) {
 
-        inputStream.close();
-        return result;
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
 
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
     }
-
 
 }

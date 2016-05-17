@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blockchain.landturtle.R;
+import com.blockchain.utils.Config;
 import com.blockchain.utils.NetworkManager;
+
+import org.json.JSONObject;
+
 /**
  * Created by Shubham on 23-04-2016.
  */
@@ -59,6 +64,25 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                         form.setVisibility(View.INVISIBLE);
                         loader.setVisibility(View.VISIBLE);
 
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("propertyid", property_id);
+                                    obj.put("type", "0");
+                                    obj.put("surveyid", survey_code);
+                                    String response = nw.getResponseFromServer(Config.CHECKOWNERSHIP_URL, obj).trim();
+                                    JSONObject res_obj = new JSONObject(response);
+                                    setData(res_obj);
+                                    Log.d("resposne", response);
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }).start();
 
 
                     } else {
@@ -105,5 +129,9 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
         return v;
 
 
+    }
+    private void setData(JSONObject obj)
+    {
+        
     }
 }

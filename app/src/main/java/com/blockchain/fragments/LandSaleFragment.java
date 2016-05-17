@@ -1,5 +1,6 @@
 package com.blockchain.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.blockchain.landturtle.LandSellForm;
 import com.blockchain.adapter.CustomListViewAdapter;
 import com.blockchain.bean.SaleLand;
 import com.blockchain.landturtle.R;
@@ -40,6 +42,9 @@ public class LandSaleFragment extends android.support.v4.app.Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                    Intent i = new Intent(getActivity(),LandSellForm.class);
+                    startActivity(i);
 
             }
         });
