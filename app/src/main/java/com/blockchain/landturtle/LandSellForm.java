@@ -182,10 +182,10 @@ public class LandSellForm extends AppCompatActivity {
                     //get file path
                     land_titledeed_file = Utils.getPath(LandSellForm.this, selectedImageUri);
                     Log.d("titledeedpath", land_titledeed_file);
-                    Bitmap bitmap = BitmapFactory.decodeStream(LandSellForm.this.getContentResolver().openInputStream(selectedImageUri));
+                   // Bitmap bitmap = BitmapFactory.decodeStream(LandSellForm.this.getContentResolver().openInputStream(selectedImageUri));
 
                     //set file path to textview so user can see the selected file name
-                    titledeed.setImageBitmap(bitmap);
+                    titledeed.setImageResource(R.drawable.pdf);
 
                 } catch (NullPointerException e) {
                     e.printStackTrace();

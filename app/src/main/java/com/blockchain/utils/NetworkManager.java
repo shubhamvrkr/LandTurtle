@@ -93,7 +93,7 @@ public class NetworkManager {
             HttpResponse response = httpclient.execute(httppost);
             InputStream inputStream = response.getEntity().getContent();
             responseServer = getStringFromInputStream(inputStream);
-            Log.e("response", "response -----" + responseServer);
+            Log.d("responseserver",responseServer);
 
 
         } catch (Exception e) {
