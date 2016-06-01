@@ -264,8 +264,8 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
         try {
             surveytv.setText(res_obj.getString("postal_code"));
             propertytv.setText(res_obj.getString("land_id"));
-            landtypetv.setText(res_obj.getString("land_type"));
-            locationtv.setText(res_obj.getString("land_location"));
+            landtypetv.setText("Residential Land");
+            locationtv.setText("Opposite Forest Check Post, Mapusa Goa");
             areatv.setText(res_obj.getString("area"));
             ownername.setText(res_obj.getString("name"));
             contact.setText(res_obj.getString("contact"));

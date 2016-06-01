@@ -80,7 +80,7 @@
                         android:gravity="center"
                         android:hint="Enter propertyid here"
                         android:inputType="textAutoComplete"
-                        android:text="2131"
+                        android:text="802/32"
                         android:textSize="14sp" />
 
                     <EditText
@@ -96,7 +96,7 @@
                         android:gravity="center"
                         android:hint="Enter surveryid here"
                         android:inputType="textAutoComplete"
-                        android:text="12342"
+                        android:text="GA/BARDEZ/112"
                         android:textSize="14sp" />
 
                     <Button
