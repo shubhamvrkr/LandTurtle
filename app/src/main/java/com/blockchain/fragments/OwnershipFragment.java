@@ -171,7 +171,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
 
                                 JSONObject obj = new JSONObject();
                                 obj.put("hash", res_obj.getString("prevblock"));
-                                obj.put("prevhash", res_obj.getString("prevhash"));
+                                obj.put("prevhash", res_obj.getString("previous_hash"));
                                 obj.put("type", "1");
                                 String response = nw.getResponseFromServer(Config.CHECKOWNERSHIP_URL, obj).trim();
                                 Log.d("response", response);
@@ -267,8 +267,8 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
 
             surveytv.setText(res_obj.getString("postal_code"));
             propertytv.setText(res_obj.getString("land_id"));
-            landtypetv.setText(res_obj.getString("landtype"));
-            locationtv.setText(res_obj.getString("location"));
+            landtypetv.setText(res_obj.getString("land_type"));
+            locationtv.setText(res_obj.getString("land_location"));
             areatv.setText(res_obj.getString("area"));
             ownername.setText(res_obj.getString("name"));
             contact.setText(res_obj.getString("contact"));
