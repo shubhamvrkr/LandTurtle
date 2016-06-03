@@ -22,7 +22,7 @@ import com.blockchain.utils.NetworkManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
 
 /**
  * Created by Shubham on 23-04-2016.
@@ -77,7 +77,7 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                                             @Override
                                             public void run() {
 
-                                                Toast.makeText(getContext(),"Invalid Property or Survey No",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(),"Invalid Property ID or Survey No",Toast.LENGTH_SHORT).show();
                                                 form.setVisibility(View.VISIBLE);
                                                 land_owner_details.setVisibility(View.GONE);
                                                 loader.setVisibility(View.INVISIBLE);
@@ -168,11 +168,13 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
                         @Override
                         public void run() {
                             try {
+
                                 JSONObject obj = new JSONObject();
                                 obj.put("hash", res_obj.getString("prevblock"));
+                                obj.put("prevhash", res_obj.getString("prevhash"));
                                 obj.put("type", "1");
                                 String response = nw.getResponseFromServer(Config.CHECKOWNERSHIP_URL, obj).trim();
-                                Log.d("resposne", response);
+                                Log.d("response", response);
                                 if(response.compareToIgnoreCase("Entry Not Present")==0)
                                 {
                                     getActivity().runOnUiThread(new Runnable() {
@@ -262,10 +264,11 @@ public class OwnershipFragment extends android.support.v4.app.Fragment {
 
 
         try {
+
             surveytv.setText(res_obj.getString("postal_code"));
             propertytv.setText(res_obj.getString("land_id"));
-            landtypetv.setText("Residential Land");
-            locationtv.setText("Opposite Forest Check Post, Mapusa Goa");
+            landtypetv.setText(res_obj.getString("landtype"));
+            locationtv.setText(res_obj.getString("location"));
             areatv.setText(res_obj.getString("area"));
             ownername.setText(res_obj.getString("name"));
             contact.setText(res_obj.getString("contact"));
