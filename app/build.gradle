@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    useLibrary  'org.apache.http.legacy'
+    compileSdkVersion 22
     buildToolsVersion "23.0.0"
     defaultConfig {
         applicationId "com.blockchain.landturtle"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }

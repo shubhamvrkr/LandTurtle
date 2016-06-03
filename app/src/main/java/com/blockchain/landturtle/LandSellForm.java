@@ -1,5 +1,6 @@
 package com.blockchain.landturtle;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,9 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.blockchain.utils.Config;
 import com.blockchain.utils.NetworkManager;
+import com.blockchain.utils.SHAHashingExample;
 import com.blockchain.utils.Utils;
+
+import org.json.JSONObject;
 
 /**
  * Created by shubham_verekar on 5/17/2016.
@@ -29,9 +35,10 @@ public class LandSellForm extends AppCompatActivity {
     CoordinatorLayout layout;
     NetworkManager manager = new NetworkManager();
     ImageView landpic, titledeed;
-    String survey_id, property_id, landtype, areasize, price, location, land_pic_path, land_titledeed_file;
+    String survey_id, property_id, landtype, areasize, price, location, land_pic_path, land_titledeed_file,contact;
     Button upload_landpic, upload_titledeed, cancel, sell;
-    EditText surveyno, propertyno, landtypeet, areasizeet, priceet, locationet;
+    EditText surveyno, propertyno, landtypeet, areasizeet, priceet, locationet,contactet;
+    NetworkManager nm  = new NetworkManager();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class LandSellForm extends AppCompatActivity {
                     areasize = areasizeet.getText().toString().trim();
                     price = priceet.getText().toString().trim();
                     location = locationet.getText().toString().trim();
+                    contact=contactet.getText().toString().trim();
                     if (survey_id.length() <= 0 || property_id.length() <= 0 || landtype.length() <= 0 || areasize.length() <= 0 || price.length() <= 0 || location.length() <= 0) {
 
                         snackbar = Snackbar
@@ -143,6 +151,7 @@ public class LandSellForm extends AppCompatActivity {
         upload_titledeed = (Button) findViewById(R.id.upload_titledeed);
         cancel = (Button) findViewById(R.id.cancel);
         sell = (Button) findViewById(R.id.sell);
+        contactet=(EditText)findViewById(R.id.contact);
         layout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
     }
 
@@ -201,6 +210,80 @@ public class LandSellForm extends AppCompatActivity {
 
     private void sellLandProcess()
     {
+       final ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Sell My Land");
+        progress.setMessage("Please wait.. ");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+
+                String dochash = SHAHashingExample.generateSHA256(land_titledeed_file);
+                int rescode =nm.uploadFile(land_pic_path);
+                if(rescode==200)
+                {
+
+                    JSONObject obj = new JSONObject();
+                   try
+                   {
+                       obj.put("survey_no",survey_id);
+                       obj.put("land_id",property_id);
+                       obj.put("land_type",landtype);
+                       obj.put("area",areasize);
+                       obj.put("price",price);
+                       obj.put("location",location);
+                       obj.put("hash",dochash);
+                       obj.put("land_pic_path",land_pic_path);
+                   }
+                   catch(Exception e) {
+
+                   }
+
+                    boolean  b = Boolean.parseBoolean(nm.getResponseFromServer(Config.SELLLAND_URL, obj));
+                    if(b)
+                    {
+                        LandSellForm.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LandSellForm.this,"Invalid title deed document!! ",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else
+                    {
+
+                        LandSellForm.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progress.dismiss();
+                                Toast.makeText(LandSellForm.this,"Invalid title deed document!! ",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                }
+                else
+                {
+
+                        LandSellForm.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progress.dismiss();
+                                Toast.makeText(LandSellForm.this,"Network Error!! please try after some time.. ",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                }
+
+            }
+        }).start();
+
+
 
     }
 }
