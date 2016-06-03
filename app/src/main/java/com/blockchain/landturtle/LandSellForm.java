@@ -77,7 +77,7 @@ public class LandSellForm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (manager.isInternetPresent(LandSellForm.this)) {
+               // if (manager.isInternetPresent(LandSellForm.this)) {
 
                     survey_id = surveyno.getText().toString().trim();
                     property_id = propertyno.getText().toString().trim();
@@ -110,10 +110,10 @@ public class LandSellForm extends AppCompatActivity {
                     } else {
 
                         sellLandProcess();
-                    }
+                       }
 
 
-                } else {
+           /*     } else {
                     snackbar = Snackbar
                             .make(layout, "No internet connection!", Snackbar.LENGTH_LONG)
                             .setAction("SETTINGS", new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class LandSellForm extends AppCompatActivity {
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.parseColor("#2196F3"));
                     snackbar.show();
-                }
+                }*/
 
             }
         });
@@ -223,6 +223,7 @@ public class LandSellForm extends AppCompatActivity {
 
 
                 String dochash = SHAHashingExample.generateSHA256(land_titledeed_file);
+                Log.d("documenthash",dochash);
                 int rescode =nm.uploadFile(land_pic_path);
                 if(rescode==200)
                 {
