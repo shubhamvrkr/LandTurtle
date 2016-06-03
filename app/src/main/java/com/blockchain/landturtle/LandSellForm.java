@@ -210,7 +210,7 @@ public class LandSellForm extends AppCompatActivity {
 
     private void sellLandProcess()
     {
-       final ProgressDialog progress = new ProgressDialog(this);
+        final ProgressDialog progress = new ProgressDialog(this);
         progress.setTitle("Sell My Land");
         progress.setMessage("Please wait.. ");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -235,6 +235,7 @@ public class LandSellForm extends AppCompatActivity {
                        obj.put("land_type",landtype);
                        obj.put("area",areasize);
                        obj.put("price",price);
+                       obj.put("contact",contact);
                        obj.put("location",location);
                        obj.put("hash",dochash);
                        obj.put("land_pic_path",land_pic_path);
@@ -242,14 +243,15 @@ public class LandSellForm extends AppCompatActivity {
                    catch(Exception e) {
 
                    }
-
                     boolean  b = Boolean.parseBoolean(nm.getResponseFromServer(Config.SELLLAND_URL, obj));
                     if(b)
                     {
                         LandSellForm.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LandSellForm.this,"Invalid title deed document!! ",Toast.LENGTH_SHORT).show();
+
+                                progress.dismiss();
+                                Toast.makeText(LandSellForm.this,"Successfully Registered!! ",Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -273,7 +275,7 @@ public class LandSellForm extends AppCompatActivity {
                             @Override
                             public void run() {
                                 progress.dismiss();
-                                Toast.makeText(LandSellForm.this,"Network Error!! please try after some time.. ",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LandSellForm.this,"Network Error!! please try again.. ",Toast.LENGTH_SHORT).show();
                             }
                         });
 
