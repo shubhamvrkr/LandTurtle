@@ -19,6 +19,7 @@ import android.view.View;
 import com.blockchain.adapter.RecyclerViewAdapter;
 import com.blockchain.fragments.HomeFragment;
 import com.blockchain.listeners.RecyclerItemClickListener;
+import com.blockchain.utils.SHAHashingExample;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String dochash = SHAHashingExample.generateSHA256("/sdcard/bluetooth/Land_property.pdf");
+        Log.d("documenthash", dochash);
+        String dochash1 = SHAHashingExample.generateSHA256("/sdcard/bluetooth/Land_deeds.pdf");
+        Log.d("documenthash", dochash1);
         //set tool bar
         setupToolbar();
 

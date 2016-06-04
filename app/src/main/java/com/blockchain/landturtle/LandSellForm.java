@@ -26,6 +26,8 @@ import com.blockchain.utils.Utils;
 
 import org.json.JSONObject;
 
+import java.io.File;
+
 /**
  * Created by shubham_verekar on 5/17/2016.
  */
@@ -35,9 +37,9 @@ public class LandSellForm extends AppCompatActivity {
     CoordinatorLayout layout;
     NetworkManager manager = new NetworkManager();
     ImageView landpic, titledeed;
-    String survey_id, property_id, landtype, areasize, price, location, land_pic_path, land_titledeed_file,contact;
+    String survey_id, property_id, price, land_pic_path, land_titledeed_file,contact;
     Button upload_landpic, upload_titledeed, cancel, sell;
-    EditText surveyno, propertyno, landtypeet, areasizeet, priceet, locationet,contactet;
+    EditText surveyno, propertyno, priceet,contactet;
     NetworkManager nm  = new NetworkManager();
 
     @Override
@@ -81,12 +83,9 @@ public class LandSellForm extends AppCompatActivity {
 
                     survey_id = surveyno.getText().toString().trim();
                     property_id = propertyno.getText().toString().trim();
-                    landtype = landtypeet.getText().toString().trim();
-                    areasize = areasizeet.getText().toString().trim();
                     price = priceet.getText().toString().trim();
-                    location = locationet.getText().toString().trim();
                     contact=contactet.getText().toString().trim();
-                    if (survey_id.length() <= 0 || property_id.length() <= 0 || landtype.length() <= 0 || areasize.length() <= 0 || price.length() <= 0 || location.length() <= 0) {
+                    if (survey_id.length() <= 0 || property_id.length() <= 0 || price.length() <= 0 || contact.length() <= 0) {
 
                         snackbar = Snackbar
                                 .make(layout, "All fields are mandatory!", Snackbar.LENGTH_LONG)
@@ -143,10 +142,7 @@ public class LandSellForm extends AppCompatActivity {
         titledeed = (ImageView) findViewById(R.id.titleddeed_pic);
         surveyno = (EditText) findViewById(R.id.survery_id);
         propertyno = (EditText) findViewById(R.id.property_id);
-        landtypeet = (EditText) findViewById(R.id.landtype);
-        areasizeet = (EditText) findViewById(R.id.areasize);
         priceet = (EditText) findViewById(R.id.price);
-        locationet = (EditText) findViewById(R.id.location);
         upload_landpic = (Button) findViewById(R.id.upload_landpic);
         upload_titledeed = (Button) findViewById(R.id.upload_titledeed);
         cancel = (Button) findViewById(R.id.cancel);
@@ -233,40 +229,54 @@ public class LandSellForm extends AppCompatActivity {
                    {
                        obj.put("survey_no",survey_id);
                        obj.put("land_id",property_id);
-                       obj.put("land_type",landtype);
-                       obj.put("area",areasize);
                        obj.put("price",price);
                        obj.put("contact",contact);
-                       obj.put("location",location);
                        obj.put("hash",dochash);
-                       obj.put("land_pic_path",land_pic_path);
+                       obj.put("land_pic_path",new File(land_pic_path).getName());
                    }
                    catch(Exception e) {
 
                    }
-                    boolean  b = Boolean.parseBoolean(nm.getResponseFromServer(Config.SELLLAND_URL, obj));
-                    if(b)
-                    {
-                        LandSellForm.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                    String res  = nm.getResponseFromServer(Config.SELLLAND_URL, obj);
+                    Log.d("resposne",res);
+                    try{
+                       final  JSONObject response= new JSONObject(res);
+                        if(response.getInt("success")==1)
+                        {
+                            LandSellForm.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                                progress.dismiss();
-                                Toast.makeText(LandSellForm.this,"Successfully Registered!! ",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+                                    progress.dismiss();
+                                    Toast.makeText(LandSellForm.this,"Successfully Registered!! ",Toast.LENGTH_SHORT).show();
+                                    LandSellForm.this.finish();
+                                }
+                            });
+                        }
+                        else
+                        {
+                            LandSellForm.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try
+                                    {
+                                        progress.dismiss();
+                                        Toast.makeText(LandSellForm.this,response.getString("message"),Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    catch(Exception e){
+
+                                    }
+
+                                }
+                            });
+
+                        }
                     }
-                    else
-                    {
+                    catch(Exception e) {
 
-                        LandSellForm.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progress.dismiss();
-                                Toast.makeText(LandSellForm.this,"Invalid title deed document!! ",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
+                        e.printStackTrace();
                     }
                 }
                 else

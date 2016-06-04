@@ -1,5 +1,7 @@
 package com.blockchain.utils;
 
+import android.util.Base64;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -58,7 +60,6 @@ public class SHAHashingExample
         md.update(data.getBytes());
 
         byte byteData[] = md.digest();
-
         //convert the byte to hex format method 1
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < byteData.length; i++) {
